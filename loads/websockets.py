@@ -9,8 +9,9 @@ _SOCKETS = defaultdict(list)
 
 class WebSocketClient(_WS):
     def __init__(self, url, test_result, protocols=None, extensions=None,
-                 callback=None, test_case=None):
-        super(WebSocketClient, self).__init__(url, protocols, extensions)
+                 callback=None, test_case=None, headers=None):
+        super(WebSocketClient, self).__init__(url, protocols, extensions,
+                                              headers=headers)
         self.callback = callback
         self._test_result = test_result
         self.test_case = test_case
@@ -41,7 +42,7 @@ def cleanup(greenlet):
 
 
 def create_ws(url, test_result, callback=None, protocols=None,
-              extensions=None, klass=None, test_case=None):
+              extensions=None, klass=None, test_case=None, headers=None):
 
     custom_klass = klass is not None
     if klass is None:
@@ -50,7 +51,8 @@ def create_ws(url, test_result, callback=None, protocols=None,
     socket = klass(url=url, test_result=test_result,
                    protocols=protocols, extensions=extensions,
                    callback=callback,
-                   test_case=test_case)
+                   test_case=test_case,
+                   headers=headers)
 
     socket.daemon = True
     if not custom_klass:

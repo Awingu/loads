@@ -54,14 +54,15 @@ class TestCase(unittest.TestCase):
         self._test_result.incr_counter(self, self._loads_status, name)
 
     def create_ws(self, url, callback=None, protocols=None, extensions=None,
-                  klass=None):
+                  klass=None, headers=None):
         from loads.websockets import create_ws
         ws = create_ws(url, self._test_result,
                        callback=callback,
                        protocols=protocols,
                        extensions=extensions,
                        klass=klass,
-                       test_case=self)
+                       test_case=self,
+                       headers=headers)
         self._ws.append(ws)
         return ws
 
