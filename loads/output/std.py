@@ -46,11 +46,11 @@ class StdOutput(object):
         write("\nStarted: %s" % self.results.start_time)
         write("\nApproximate Average RPS: %d" %
               self.results.requests_per_second())
-        write("\nAverage request time: %.2fs" %
-              self.results.average_request_time())
-        write("\nOpened web sockets: %d" % self.results.opened_sockets)
-        write("\nBytes received via web sockets : %d\n" %
-              self.results.socket_data_received)
+        #write("\nAverage request time: %.2fs" %
+        #      self.results.average_request_time())
+        #write("\nOpened web sockets: %d" % self.results.opened_sockets)
+        #write("\nBytes received via web sockets : %d\n" %
+        #      self.results.socket_data_received)
         write("\nSuccess: %d" % self.results.nb_success)
         write("\nErrors: %d" % self.results.nb_errors)
         write("\nFailures: %d" % self.results.nb_failures)
@@ -64,38 +64,38 @@ class StdOutput(object):
             self._print_tb(self.results.failures)
             write('\n')
 
-        avt = 'average_request_time'
+        #avt = 'average_request_time'
 
-        def _metric(item1, item2):
-            return - cmp(item1[-1][avt], item2[-1][avt])
+        #def _metric(item1, item2):
+        #    return - cmp(item1[-1][avt], item2[-1][avt])
 
-        metrics = [(url, metric)
-                   for url, metric in self.results.get_url_metrics().items()]
-        metrics.sort(_metric)
+        #metrics = [(url, metric)
+        #           for url, metric in self.results.get_url_metrics().items()]
+        #metrics.sort(_metric)
 
-        if len(metrics) > 0:
-            slowest = metrics[0]
-            write("\nSlowest URL: %s \tAverage Request Time: %s" %
-                  (slowest[0], slowest[1][avt]))
+        #if len(metrics) > 0:
+        #    slowest = metrics[0]
+        #    write("\nSlowest URL: %s \tAverage Request Time: %s" %
+        #          (slowest[0], slowest[1][avt]))
 
-            if len(metrics) > 10:
-                write("\n\nStats by URLs (10 slowests):")
-                metrics = metrics[:10]
-            else:
-                write("\n\nStats by URLs:")
+        #    if len(metrics) > 10:
+        #        write("\n\nStats by URLs (10 slowests):")
+        #        metrics = metrics[:10]
+        #    else:
+        #        write("\n\nStats by URLs:")
 
-            longer_url = max([len(url) for url, metric in metrics])
+        #    longer_url = max([len(url) for url, metric in metrics])
 
-            for url, metric in metrics:
-                spacing = (longer_url - len(url)) * ' '
-                write("\n- %s%s\t" % (url, spacing))
-                res = []
-                for name, value in metric.items():
-                    res.append("%s: %s" % (name.replace('_', ' ').capitalize(),
-                                           value))
-                write('%s' % '\t'.join(res))
+        #    for url, metric in metrics:
+        #        spacing = (longer_url - len(url)) * ' '
+        #        write("\n- %s%s\t" % (url, spacing))
+        #        res = []
+        #        for name, value in metric.items():
+        #            res.append("%s: %s" % (name.replace('_', ' ').capitalize(),
+        #                                   value))
+        #        write('%s' % '\t'.join(res))
 
-        write('\n')
+        #write('\n')
         counters = self.results.get_counters()
         if len(counters) > 0:
             write("\nCustom metrics:")
